@@ -1,0 +1,38 @@
+version: "3.5"
+services: 
+    sql:
+        image: mcr.microsoft.com/mssql/server:2017-latest
+        container_name: sql
+        ports: 
+            - 1433:1433
+        environment: 
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Secure@001
+        volumes: 
+            - sql1data:/var/opt/mssql
+        networks: 
+            - microservice
+    
+    web:
+        image: employee-microservice
+        container_name: micregs
+        build: 
+            context: .
+            dockerfile: Registration/Dockerfile
+        environment: 
+            - ASPNETCORE_URLS=http://+:5000
+            - ASPNETCORE_ENVIRONMENT=Production
+        ports: 
+            - 5000:5000
+        depends_on: 
+            - sql
+        restart: on-failure
+        networks: 
+            - microservice
+
+volumes: 
+    sql1data:
+
+networks: 
+    microservice:
+        name: microservice
