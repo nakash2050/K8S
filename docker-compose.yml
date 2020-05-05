@@ -29,6 +29,17 @@ services:
         restart: on-failure
         networks: 
             - microservice
+    
+    spa:
+        image: employee-spa
+        container_name: emp-spa
+        build: 
+            context: .
+            dockerfile: SPA/Dockerfile
+        ports:
+            - 8080:80
+        networks: 
+            - microservice
 
 volumes: 
     sql1data:

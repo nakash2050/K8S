@@ -8,7 +8,7 @@
                     <label for="firstName" class="control-label">First Name</label>
                     <input type="text" class="form-control"
                         [class.is-invalid]="refFirstName.touched && refFirstName.invalid" id="firstName" maxlength="100"
-                        required name="firstName" #refFirstName="ngModel" (ngModel)="firstName" autocomplete="off">
+                        required name="firstName" #refFirstName="ngModel" ngModel autocomplete="off">
 
                     <div *ngIf="refFirstName.touched && refFirstName.invalid" class="invalid-feedback">First Name is
                         required</div>
@@ -17,7 +17,7 @@
                     <label for="lastName" class="control-label">Last Name</label>
                     <input type="text" class="form-control" id="lastName" maxlength="100" required name="lastName"
                         [class.is-invalid]="refLastName.touched && refLastName.invalid" #refLastName="ngModel"
-                        (ngModel)="lastName" autocomplete="off">
+                        ngModel autocomplete="off">
 
                     <div *ngIf="refLastName.touched && refLastName.invalid" class="invalid-feedback">Last Name is
                         required</div>
@@ -26,7 +26,7 @@
                     <label for="designation" class="control-label">Designation</label>
                     <input type="text" class="form-control" id="designation" maxlength="100" required name="designation"
                         [class.is-invalid]="refDesignation.touched && refDesignation.invalid" #refDesignation="ngModel"
-                        (ngModel)="designation" autocomplete="off">
+                        ngModel autocomplete="off">
 
                     <div *ngIf="refDesignation.touched && refDesignation.invalid" class="invalid-feedback">Designation
                         is

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from 'src/app/_services/employee.service';
-import { FormGroup, Form } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-employee',
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AddEmployeeComponent implements OnInit {
 
   isRegistered: boolean = false;
-  form: FormGroup;
+
 
   constructor(
     private employeeService: EmployeeService,
@@ -21,7 +21,7 @@ export class AddEmployeeComponent implements OnInit {
   ngOnInit() {
   }
 
-  addEmployee(form: FormGroup): void {
+  addEmployee(form: NgForm): void {
     this.employeeService.addNewEmployee(form.value)
     .subscribe(data => {
       this.isRegistered = data != null;
