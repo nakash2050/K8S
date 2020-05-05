@@ -32,6 +32,15 @@ namespace Registration
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionString"]);
@@ -52,6 +61,8 @@ namespace Registration
 
                 });
             });
+
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,7 +78,8 @@ namespace Registration
                 seeder.Seed();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
+            app.UseHealthChecks("/health");
 
             app.UseSwagger(c =>
             {

@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header bg-dark text-light">Registered Employees</div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let emp of employees">
+                    <td>
+                        {{emp.firstName}}
+                    </td>
+                    <td>{{emp.lastName}}</td>
+                    <td>{{emp.designation}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" type="button" (click)="navigateToUpdate(emp.employeeId)">Update</button>
+                        <button class="btn btn-sm btn-danger ml-1" type="button"
+                            (click)="deleteEmployee(emp.employeeId)">Delete</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
