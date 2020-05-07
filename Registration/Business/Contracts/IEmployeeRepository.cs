@@ -14,5 +14,7 @@ namespace Registration.Business.Contracts
         Task<EmployeeDTO[]> GetAllEmployees();
 
         Task<bool> DeleteEmployee(int id);
+
+        Task<string> SeedDatabase();
     }
 }

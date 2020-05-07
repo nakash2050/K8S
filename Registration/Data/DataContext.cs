@@ -16,6 +16,7 @@ namespace Registration.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>().ToTable("tblEmployees").HasKey(e => e.Id);
+            modelBuilder.Entity<Employee>().Property(e => e.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<Employee>().Property(e => e.FirstName).HasColumnType("VARCHAR(100)");
             modelBuilder.Entity<Employee>().Property(e => e.LastName).HasColumnType("VARCHAR(100)");
             modelBuilder.Entity<Employee>().Property(e => e.Designation).HasColumnType("VARCHAR(100)");

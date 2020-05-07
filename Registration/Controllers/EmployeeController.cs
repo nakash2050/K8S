@@ -61,5 +61,12 @@ namespace Registration.Controllers
             var result = await employeeRepository.DeleteEmployee(id);
             return Ok(result);
         }
+
+        [HttpGet("seed")]
+        public async Task<IActionResult> SeedDatabase()
+        {
+            var result = await employeeRepository.SeedDatabase();
+            return Ok(result);
+        }
     }
 }

@@ -15,7 +15,12 @@
       "launchUrl": "swagger/index.html",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "PG_SERVER": "localhost",
+        "PG_SERVER_PORT": "5432",
+        "PG_DATABASE": "Employee",
+        "PG_USERNAME": "postgres",
+        "PG_PASSWORD": "Secure@001"
       }
     }
   }

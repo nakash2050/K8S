@@ -1,17 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Registration.Business.Concretes;
 using Registration.Business.Contracts;
 using Registration.Data;
@@ -41,9 +35,18 @@ namespace Registration
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+
+            string dbServer = Environment.GetEnvironmentVariable("PG_SERVER");
+            string dbPort = Environment.GetEnvironmentVariable("PG_SERVER_PORT");
+            string databaseName = Environment.GetEnvironmentVariable("PG_DATABASE");
+            string dbUsername = Environment.GetEnvironmentVariable("PG_USERNAME");
+            string dbPassword = Environment.GetEnvironmentVariable("PG_PASSWORD");
+
+            var connectionString = $"Server={dbServer};Port={dbPort};Database={databaseName};Username={dbUsername};Password={dbPassword}";
+
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlServer(Configuration["ConnectionString"]);
+                options.UseNpgsql(connectionString);
 
             });
 
@@ -75,7 +78,7 @@ namespace Registration
 
             if (env.IsProduction())
             {
-                seeder.Seed();
+                //seeder.Seed();
             }
 
             app.UseCors("CorsPolicy");

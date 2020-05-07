@@ -1,13 +1,26 @@
 version: "3.5"
 services: 
-    sql:
-        image: mcr.microsoft.com/mssql/server:2017-latest
-        container_name: sql
+    # sql:
+    #     image: mcr.microsoft.com/mssql/server:2017-latest
+    #     container_name: sql
+    #     ports: 
+    #         - 1433:1433
+    #     environment: 
+    #         - ACCEPT_EULA=Y
+    #         - SA_PASSWORD=Secure@001
+    #     volumes: 
+    #         - sql1data:/var/opt/mssql
+    #     networks: 
+    #         - microservice
+
+    db:
+        image: postgres
+        container_name: pgsql
         ports: 
-            - 1433:1433
+            - 5432:5432
         environment: 
-            - ACCEPT_EULA=Y
-            - SA_PASSWORD=Secure@001
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=Secure@001
         volumes: 
             - sql1data:/var/opt/mssql
         networks: 
@@ -22,10 +35,15 @@ services:
         environment: 
             - ASPNETCORE_URLS=http://+:5000
             - ASPNETCORE_ENVIRONMENT=Production
+            - PG_SERVER=db
+            - PG_SERVER_PORT=5432
+            - PG_DATABASE=Employee
+            - PG_USERNAME=postgres
+            - PG_PASSWORD=Secure@001
         ports: 
             - 5000:5000
         depends_on: 
-            - sql
+            - db
         restart: on-failure
         networks: 
             - microservice

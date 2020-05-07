@@ -80,5 +80,18 @@ namespace Registration.Business.Concretes
 
             return false;
         }
+
+        public async Task<string> SeedDatabase()
+        {
+            try
+            {
+                await dataContext.Database.MigrateAsync();
+                return "Done!";
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
     }
 }
