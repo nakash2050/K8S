@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
     name: server-deployment
 spec:
-    replicas: 3
+    replicas: 1
     selector:
         matchLabels:
             component: server
@@ -14,6 +14,26 @@ spec:
         spec:
             containers:
                 - name: server
-                  image: nakash2050/employee-microservice
+                  image: nakash2050/employee-microservice:v2
                   ports:
                     - containerPort: 5000
+                  env:
+                    - name: ASPNETCORE_URLS
+                      value: http://+:5000
+                    - name: ASPNETCORE_ENVIRONMENT
+                      value: Production
+                    - name: API_PATH_BASE
+                      value: employee-api
+                    - name: PG_SERVER
+                      value: postgres-cluster-ip-service
+                    - name: PG_SERVER_PORT
+                      value: '5432'
+                    - name: PG_DATABASE
+                      value: Employee
+                    - name: PG_USERNAME
+                      value: postgres
+                    - name: PG_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                            name: pgpassword
+                            key: PG_PASSWORD

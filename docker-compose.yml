@@ -40,6 +40,7 @@ services:
             - PG_DATABASE=Employee
             - PG_USERNAME=postgres
             - PG_PASSWORD=Secure@001
+            - API_PATH_BASE=employee
         ports: 
             - 5000:5000
         depends_on: 
@@ -54,6 +55,8 @@ services:
         build: 
             context: .
             dockerfile: SPA/Dockerfile
+        environment:
+            - BASE_API_URL=http://localhost:5000/employee/api/
         ports:
             - 8080:80
         networks: 

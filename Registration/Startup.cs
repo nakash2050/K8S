@@ -81,6 +81,13 @@ namespace Registration
                 //seeder.Seed();
             }
 
+            var pathBase = Environment.GetEnvironmentVariable("API_PATH_BASE");
+
+            if (!string.IsNullOrWhiteSpace(pathBase))
+            {
+                app.UsePathBase($"/{pathBase.TrimStart('/')}");
+            }
+
             app.UseCors("CorsPolicy");
             app.UseHealthChecks("/health");
 
@@ -92,12 +99,11 @@ namespace Registration
 
             app.UseSwaggerUI(s =>
             {
-                s.SwaggerEndpoint("/swagger/v1/swagger.json", "Registration Service");
+                s.SwaggerEndpoint(string.Format("{0}{1}", $"/{pathBase.TrimStart('/')}", "/swagger/v1/swagger.json"), "Registration Service");
             });
 
+            app.UseStaticFiles();
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
