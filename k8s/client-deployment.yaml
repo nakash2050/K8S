@@ -19,4 +19,4 @@ spec:
                     - containerPort: 80
                   env:
                     - name: BASE_API_URL
-                      value: http://localhost/employee-api/api/
+                      value: '../employee-api/api/'
