@@ -36,19 +36,7 @@ namespace Registration
                     .AllowCredentials());
             });
 
-            string dbServer = Environment.GetEnvironmentVariable("PG_SERVER");
-            string dbPort = Environment.GetEnvironmentVariable("PG_SERVER_PORT");
-            string databaseName = Environment.GetEnvironmentVariable("PG_DATABASE");
-            string dbUsername = Environment.GetEnvironmentVariable("PG_USERNAME");
-            string dbPassword = Environment.GetEnvironmentVariable("PG_PASSWORD");
-
-            var connectionString = $"Server={dbServer};Port={dbPort};Database={databaseName};Username={dbUsername};Password={dbPassword}";
-
-            services.AddDbContext<DataContext>(options =>
-            {
-                options.UseNpgsql(connectionString);
-
-            });
+            services.AddDbContext<DataContext>();
 
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();

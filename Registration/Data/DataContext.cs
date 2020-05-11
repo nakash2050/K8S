@@ -6,12 +6,27 @@ namespace Registration.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options): base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Employee> Employees { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string dbServer = Environment.GetEnvironmentVariable("PG_SERVER");
+            string dbPort = Environment.GetEnvironmentVariable("PG_SERVER_PORT");
+            string databaseName = Environment.GetEnvironmentVariable("PG_DATABASE");
+            string dbUsername = Environment.GetEnvironmentVariable("PG_USERNAME");
+            string dbPassword = Environment.GetEnvironmentVariable("PG_PASSWORD");
+
+            var connectionString = $"Server={dbServer};Port={dbPort};Database={databaseName};Username={dbUsername};Password={dbPassword}";
+            optionsBuilder.UseNpgsql(connectionString);
+
+
+            base.OnConfiguring(optionsBuilder);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
