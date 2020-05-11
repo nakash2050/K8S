@@ -29,6 +29,9 @@ Applying Ingress Config
 ------------------------------------------------------------------------------------------------------------------------
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
 kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
+
+Reference:
+https://kubernetes.github.io/ingress-nginx/
 ------------------------------------------------------------------------------------------------------------------------
 
 Kubernetes Dashboard
@@ -46,3 +49,23 @@ References:
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 ------------------------------------------------------------------------------------------------------------------------
+
+For encrypting GCP Service Account file using Ruby via Docker
+------------------------------------------------------------------------------------------------------------------------
+docker run --rm -it -v $(PWD):/app --name ruby-encrypter ruby:2.4 sh
+cd app
+gem install travis
+travis login --com
+travis encrypt-file service-account.json -r nakash2050/k8s --com
+
+To get GIT SHA
+------------------------------------------------------------------------------------------------------------------------
+git rev-parse HEAD
+------------------------------------------------------------------------------------------------------------------------
+
+HELM for Production deployment which help deploying Ingress
+------------------------------------------------------------------------------------------------------------------------
+https://helm.sh/docs/intro/quickstart/
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get-helm.sh
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
