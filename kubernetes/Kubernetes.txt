@@ -77,3 +77,34 @@ $ ./get_helm.sh
 
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 helm install my-nginx stable/nginx-ingress --set rbac.create=true
+
+
+Installing HTTPS on K8S
+------------------------------------------------------------------------------------------------------------------------
+1. Apply the yaml config file
+
+kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
+
+2. Create the namespace for cert-manager
+
+kubectl create namespace cert-manager
+
+3. Add the Jetstack Helm repository
+
+helm repo add jetstack https://charts.jetstack.io
+
+4. Update your local Helm chart repository cache
+
+helm repo update
+
+5.  Install the cert-manager Helm chart:
+
+Helm v3:
+
+helm install \
+  cert-manager \
+  --namespace cert-manager \
+  --version v0.11.0 \
+  jetstack/cert-manager
+
+
