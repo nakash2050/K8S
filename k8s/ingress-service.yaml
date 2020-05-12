@@ -15,16 +15,16 @@ spec:
       secretName: k8s-multi-com
     rules:
       - host: bookyourride.tk
-          http:
-            paths:
-                - path: /
-                  backend:
-                    serviceName: client-cluster-ip-service
-                    servicePort: 80
-                - path: /employee-api
-                  backend:
-                    serviceName: server-cluster-ip-service
-                    servicePort: 5000
+        http:
+          paths:
+            - path: /
+              backend:
+                serviceName: client-cluster-ip-service
+                servicePort: 80
+              - path: /employee-api
+                backend:
+                  serviceName: server-cluster-ip-service
+                  servicePort: 5000
 
         - host: www.bookyourride.tk
           http:
