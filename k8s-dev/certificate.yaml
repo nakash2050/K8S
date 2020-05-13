@@ -7,7 +7,7 @@ spec:
     issuerRef:
         name: letsencrypt-prod
         kind: ClusterIssuer
-    commonName: otmsservice.tk
+    commonName: www.otmsservice.tk
     dnsNames:
         - otmsservice.tk
         - www.otmsservice.tk
