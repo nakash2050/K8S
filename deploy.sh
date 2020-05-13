@@ -6,6 +6,6 @@ docker push nakash2050/employee-spa:$SHA
 docker push nakash2050/employee-microservice
 docker push nakash2050/employee-microservice:$SHA
 
-kubectl apply -f k8s
+kubectl apply -f k8s-dev
 kubectl set image deployments/client-deployment client=nakash2050/employee-spa:$SHA
 kubectl set image deployments/server-deployment server=nakash2050/employee-microservice:$SHA
