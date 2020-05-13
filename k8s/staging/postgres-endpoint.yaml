@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: postgres-endpoint
+spec:
+    ports:
+        - port: 5432
+          targetPort: 5432
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+    name: postgres-endpoint
+subsets:
+    - addresses:
+        - ip: 34.69.136.229
+      ports:
+        - port: 5432
