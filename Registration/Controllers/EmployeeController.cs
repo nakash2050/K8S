@@ -68,5 +68,11 @@ namespace Registration.Controllers
             var result = await employeeRepository.SeedDatabase();
             return Ok(result);
         }
+
+        [HttpGet("sayhello/{name}")]
+        public IActionResult SayHello(string name)
+        {
+            return Ok($"Hello {name}!");
+        }
     }
 }
