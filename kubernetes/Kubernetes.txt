@@ -101,10 +101,7 @@ helm repo update
 
 Helm v3:
 
-helm install \
-  cert-manager \
-  --namespace cert-manager \
-  --version v0.11.0 \
-  jetstack/cert-manager
+helm install cert-manager --namespace cert-manager --version v0.11.0 jetstack/cert-manager
 
-
+Reference Docs:
+https://docs.cert-manager.io/en/latest/reference/issuers.html
