@@ -18,3 +18,4 @@ spec:
               domains:
                 - otmsservice.tk
                 - www.otmsservice.tk
+              selector: {}
