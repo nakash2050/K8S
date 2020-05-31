@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EmployeeModel } from '../_models/employee.model';
 import { SettingsService } from './settings.service';
+import { ISkill } from '../_models/skill.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,9 @@ export class EmployeeService {
 
   updateEmployeeDetaisl(empId: string, empData: EmployeeModel): Observable<boolean> {
     return this.httpClient.put<boolean>(this.baseApiUrl + 'employee/' + empId, empData);
+  }
+
+  getAllSkills(): Observable<ISkill[]> {
+    return this.httpClient.get<ISkill[]>(this.baseApiUrl + 'employee/skills');
   }
 }

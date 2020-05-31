@@ -13,6 +13,7 @@
                     <div *ngIf="refFirstName.touched && refFirstName.invalid" class="invalid-feedback">First Name is
                         required</div>
                 </div>
+
                 <div class="form-group">
                     <label for="lastName" class="control-label">Last Name</label>
                     <input type="text" class="form-control" id="lastName" maxlength="100" required name="lastName"
@@ -22,6 +23,7 @@
                     <div *ngIf="refLastName.touched && refLastName.invalid" class="invalid-feedback">Last Name is
                         required</div>
                 </div>
+
                 <div class="form-group">
                     <label for="designation" class="control-label">Designation</label>
                     <input type="text" class="form-control" id="designation" maxlength="100" required name="designation"
@@ -32,6 +34,19 @@
                         is
                         required</div>
                 </div>
+
+                <div class="form-group">
+                    <label for="skill" class="control-label">Skill</label>
+                    <select type="text" class="form-control" id="skill" required name="skillId"
+                        [class.is-invalid]="refSkill.touched && refSkill.invalid" #refSkill="ngModel"
+                        ngModel autocomplete="off">
+                        <option value="">select</option>
+                        <option *ngFor="let skill of skills" [value]="skill.id">{{skill.skillName}}</option>
+                    </select>
+
+                    <div *ngIf="refSkill.touched && refSkill.invalid" class="invalid-feedback">Skill is required</div>
+                </div>
+
                 <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
                 <button type="reset" class="btn btn-secondary ml-1">Reset</button>
             </form>

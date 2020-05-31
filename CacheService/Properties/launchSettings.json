@@ -9,21 +9,21 @@
     }
   },
   "profiles": {
-    "Registration": {
+    "CacheService": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "employee/swagger/index.html",
+      "launchUrl": "cache/swagger/index.html",
       "environmentVariables": {
         "PG_SERVER": "localhost",
         "PG_PASSWORD": "Secure@001",
+        "CACHE_TIMEOUT": "600",
         "PG_USERNAME": "postgres",
-        "API_PATH_BASE": "employee",
-        "CACHE_SERVICE_URL": "http://localhost:5001/cache/api",
+        "API_PATH_BASE": "cache",
         "PG_SERVER_PORT": "5432",
-        "PG_DATABASE": "Employee",
+        "PG_DATABASE": "CacheData",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://localhost:5001"
     }
   }
 }

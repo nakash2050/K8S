@@ -26,9 +26,43 @@ services:
         networks: 
             - microservice
     
+    redis:
+        image: redis
+        container_name: redis
+        ports:
+            - 6379:6379
+        volumes: 
+            - redis:/data
+        networks:
+            - microservice
+
+    cache:
+        image: cache-microservice
+        container_name: cache-svc
+        build: 
+            context: .
+            dockerfile: CacheService/Dockerfile
+        environment: 
+            - ASPNETCORE_URLS=http://+:5001
+            - ASPNETCORE_ENVIRONMENT=Production
+            - PG_SERVER=db
+            - PG_SERVER_PORT=5432
+            - PG_DATABASE=CacheData
+            - PG_USERNAME=postgres
+            - PG_PASSWORD=Secure@001
+            - API_PATH_BASE=cache
+            - CACHE_TIMEOUT=600
+        ports: 
+            - 5001:5001
+        depends_on: 
+            - db
+        restart: on-failure
+        networks: 
+            - microservice
+    
     web:
         image: employee-microservice
-        container_name: micregs
+        container_name: employee-svc
         build: 
             context: .
             dockerfile: Registration/Dockerfile
@@ -41,10 +75,12 @@ services:
             - PG_USERNAME=postgres
             - PG_PASSWORD=Secure@001
             - API_PATH_BASE=employee
+            - CACHE_SERVICE_URL=http://cache:5001/cache/api
         ports: 
             - 5000:5000
         depends_on: 
             - db
+            - cache
         restart: on-failure
         networks: 
             - microservice
@@ -64,6 +100,7 @@ services:
 
 volumes: 
     sql1data:
+    redis:
 
 networks: 
     microservice:

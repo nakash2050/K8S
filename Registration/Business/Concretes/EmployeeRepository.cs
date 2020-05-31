@@ -1,10 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Registration.Business.Contracts;
 using Registration.Data;
 using Registration.Domain;
 using Registration.DTO;
+using Registration.Services;
+using RestEase;
 
 namespace Registration.Business.Concretes
 {
@@ -50,7 +54,19 @@ namespace Registration.Business.Concretes
 
             if (employeesInDb != null)
             {
-                return mapper.Map<EmployeeDTO[]>(employeesInDb);
+                var cacheServiceUrl = Environment.GetEnvironmentVariable("CACHE_SERVICE_URL");
+                var cacheApi = RestClient.For<ICacheApi>($"{cacheServiceUrl}/skill");
+
+                var skills = await cacheApi.GetAsync();
+
+                var employeesDTO = mapper.Map<EmployeeDTO[]>(employeesInDb);
+
+                employeesDTO.ToList().ForEach(emp =>
+                {
+                    emp.SkillName = skills.FirstOrDefault(skill => skill.Id == emp.SkillId).SkillName;
+                });
+
+                return employeesDTO;
             }
 
             return null;
@@ -62,7 +78,9 @@ namespace Registration.Business.Concretes
 
             if (employeeInDb != null)
             {
-                return mapper.Map<EmployeeDTO>(employeeInDb);
+                var skillDTO = mapper.Map<EmployeeDTO>(employeeInDb);
+
+                return skillDTO;
             }
 
             return null;
@@ -92,6 +110,14 @@ namespace Registration.Business.Concretes
             {
                 return ex.Message.ToString();
             }
+        }
+
+        public async Task<SkillDTO[]> GetAllSkills()
+        {
+            var cacheServiceUrl = Environment.GetEnvironmentVariable("CACHE_SERVICE_URL");
+            ICacheApi cacheApi = RestClient.For<ICacheApi>($"{cacheServiceUrl}/skill");
+            var skills = await cacheApi.GetAsync();
+            return skills;
         }
     }
 }

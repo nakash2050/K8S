@@ -1,16 +1,20 @@
 using System;
-using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CacheService.Data;
+using CacheService.Installer;
+using CacheService.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Registration.Business.Concretes;
-using Registration.Business.Contracts;
-using Registration.Data;
-using Registration.Helpers;
+using Microsoft.Extensions.Logging;
 
-namespace Registration
+namespace CacheService
 {
     public class Startup
     {
@@ -24,7 +28,6 @@ namespace Registration
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -34,29 +37,29 @@ namespace Registration
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-
             services.AddDbContext<DataContext>();
+            services.InstallServicesInAssembly(Configuration);
+            services.AddTransient<ICacheRepository, CacheRepository>();
 
-            services.AddAutoMapper(typeof(Startup));
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddTransient<Seeder>();
+            services.AddControllers();
 
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Registration Service",
-                    Description = "Employee Registration"
+                    Title = "Cache Service",
+                    Description = "Getting Cached Data"
 
                 });
             });
 
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -86,7 +89,7 @@ namespace Registration
 
             app.UseSwaggerUI(s =>
             {
-                s.SwaggerEndpoint(string.Format("{0}{1}", $"/{pathBase.TrimStart('/')}", "/swagger/v1/swagger.json"), "Registration Service");
+                s.SwaggerEndpoint(string.Format("{0}{1}", $"/{pathBase.TrimStart('/')}", "/swagger/v1/swagger.json"), "Cache Service");
             });
 
             app.UseStaticFiles();

@@ -62,6 +62,13 @@ namespace Registration.Controllers
             return Ok(result);
         }
 
+        [HttpGet("skills")]
+        public async Task<IActionResult> GetSkills()
+        {
+            var result = await employeeRepository.GetAllSkills();
+            return Ok(result);
+        }
+
         [HttpGet("seed")]
         public async Task<IActionResult> SeedDatabase()
         {

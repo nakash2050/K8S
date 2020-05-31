@@ -24,7 +24,6 @@ namespace Registration.Data
             var connectionString = $"Server={dbServer};Port={dbPort};Database={databaseName};Username={dbUsername};Password={dbPassword}";
             optionsBuilder.UseNpgsql(connectionString);
 
-
             base.OnConfiguring(optionsBuilder);
         }
 

@@ -12,5 +12,8 @@ namespace Registration.DTO
 
         [Required(ErrorMessage = "Designation is required")]
         public string Designation { get; set; }
+
+        [Required(ErrorMessage = "Skill is required")]
+        public string SkillId { get; set; }
     }
 }

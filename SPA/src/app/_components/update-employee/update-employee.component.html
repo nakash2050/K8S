@@ -1,9 +1,9 @@
 <div class="col-lg-6 col-md-6 col-sm-12">
-
     <div class="card">
         <div class="card-header bg-dark text-light">Please use the below form to update the Employee Details</div>
         <div class="card-body">
             <form (ngSubmit)="updateEmployeeDetails()" autocomplete="off">
+
                 <div [formGroup]="updateForm">
                     <div class="form-group">
                         <label for="firstName" class="control-label">First Name</label>
@@ -15,6 +15,7 @@
                             class="invalid-feedback">First Name is
                             required</div>
                     </div>
+
                     <div class="form-group">
                         <label for="lastName" class="control-label">Last Name</label>
                         <input type="text" class="form-control" id="lastName" formControlName="lastName"
@@ -25,6 +26,7 @@
                             class="invalid-feedback">Last Name is
                             required</div>
                     </div>
+
                     <div class="form-group">
                         <label for="designation" class="control-label">Designation</label>
                         <input type="text" class="form-control" id="designation" formControlName="designation"
@@ -35,9 +37,22 @@
                             class="invalid-feedback">Designation is
                             required</div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="skill" class="control-label">Designation</label>
+                        <select type="text" class="form-control" id="skill" name="skillId" formControlName="skillId"
+                            [class.is-invalid]="updateForm.get('skillId').touched && updateForm.get('skillId').invalid">
+                            <option value="">select</option>
+                            <option *ngFor="let skill of skills" [value]="skill.id">{{skill.skillName}}</option>
+                        </select>
+
+                        <div *ngIf="updateForm.get('skillId').touched && updateForm.get('skillId').invalid"
+                            class="invalid-feedback">Skill is required</div>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary" [disabled]="updateForm.invalid">Submit</button>
                 <button type="reset" class="btn btn-secondary ml-1">Reset</button>
+                <a href="javascript:void" class="btn btn-danger ml-1" [routerLink]="['/home']">Cancel</a>
             </form>
         </div>
     </div>

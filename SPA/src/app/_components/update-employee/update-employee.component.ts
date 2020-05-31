@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { EmployeeService } from 'src/app/_services/employee.service';
+import { ISkill } from 'src/app/_models/skill.model';
 
 @Component({
   selector: 'app-update-employee',
@@ -11,6 +12,7 @@ import { EmployeeService } from 'src/app/_services/employee.service';
 export class UpdateEmployeeComponent implements OnInit {
   updateForm: FormGroup;
   empId: string;
+  skills: ISkill[]
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +23,10 @@ export class UpdateEmployeeComponent implements OnInit {
 
   ngOnInit() {
     this.empId = this.route.snapshot.params['id'];
+    
+    this.route.data.subscribe(data => {
+      this.skills = data.skills;
+    });
 
     this.updateForm = this.buildUpdateForm();
 
@@ -39,7 +45,8 @@ export class UpdateEmployeeComponent implements OnInit {
       employeeId: [null],
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
-      designation: [null, Validators.required]
+      designation: [null, Validators.required],
+      skillId: [null, Validators.required]
     });
   }
 
