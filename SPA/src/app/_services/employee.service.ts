@@ -17,6 +17,7 @@ export class EmployeeService {
   }
 
   addNewEmployee(data: any): Observable<boolean> {
+    data.skillId = +data.skillId;
     return this.httpClient.post<boolean>(this.baseApiUrl + 'employee/add', data);
   }
 
@@ -32,7 +33,7 @@ export class EmployeeService {
     return this.httpClient.get<EmployeeModel>(this.baseApiUrl + 'employee/' + empId);
   }
 
-  updateEmployeeDetaisl(empId: string, empData: EmployeeModel): Observable<boolean> {
+  updateEmployeeDetails(empId: string, empData: EmployeeModel): Observable<boolean> {
     return this.httpClient.put<boolean>(this.baseApiUrl + 'employee/' + empId, empData);
   }
 

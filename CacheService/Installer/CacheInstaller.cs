@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using CacheService.Cache;
 using CacheService.Services;
+using System;
 
 namespace CacheService.Installer
 {
@@ -22,7 +23,9 @@ namespace CacheService.Installer
                 return;
             }
 
-            services.AddStackExchangeRedisCache(options => options.Configuration = redisCacheSettings.ConnectionString);
+            var redisConnectionString = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING")) ? Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING") : redisCacheSettings.ConnectionString;
+
+            services.AddStackExchangeRedisCache(options => options.Configuration = redisConnectionString);
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
         }
     }

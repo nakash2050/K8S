@@ -51,7 +51,7 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   updateEmployeeDetails(): void {
-    this.employeeService.updateEmployeeDetaisl(this.empId, this.updateForm.value)
+    this.employeeService.updateEmployeeDetails(this.empId, this.updateForm.value)
       .subscribe(isUpdated => {
         if (isUpdated) {
           this.router.navigate(['home']);

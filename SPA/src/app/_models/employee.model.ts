@@ -3,5 +3,6 @@ export interface EmployeeModel {
     firstName: string,
     lastName: string,
     designation: string,
-    skillName: string
+    skillName: string,
+    skillId: string
 }
