@@ -17,7 +17,7 @@ before_install:
     # - gcloud config set project k8s-demo-277103
     # - gcloud config set compute/zone us-central1-c
     # - gcloud container clusters get-credentials k8s-demo-cluster
-    # - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 script:
     - echo "Skipping Tests"
