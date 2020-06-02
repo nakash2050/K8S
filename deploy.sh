@@ -9,9 +9,7 @@ docker push nakash2050/employee-microservice:$SHA
 docker push nakash2050/employee-cache
 docker push nakash2050/employee-cache:$SHA
 
-kubectl delete -f ./k8s/prod
-kubectl delete -f ./k8s/staging
-kubectl apply -f ./k8s/dev
+kubectl apply -f ./k8s/prod
 kubectl set image deployments/client-deployment client=nakash2050/employee-spa:$SHA
 kubectl set image deployments/server-deployment server=nakash2050/employee-microservice:$SHA
-kubectl set image deployments/cache-deployment server=nakash2050/employee-cache:$SHA
+kubectl set image deployments/cache-deployment cache=nakash2050/employee-cache:$SHA
