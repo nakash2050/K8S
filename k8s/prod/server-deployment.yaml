@@ -24,6 +24,8 @@ spec:
                       value: Production
                     - name: API_PATH_BASE
                       value: employee-api
+                    - name: CACHE_SERVICE_URL
+                      value: http://cache-cluster-ip-service:5001/cache-api/api
                     - name: PG_SERVER
                       value: postgres-cluster-ip-service
                     - name: PG_SERVER_PORT
