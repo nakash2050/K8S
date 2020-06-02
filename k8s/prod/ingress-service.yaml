@@ -25,6 +25,10 @@ spec:
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000
+          - path: /cache-api
+            backend:
+              serviceName: cache-cluster-ip-service
+              servicePort: 5001
     - host: www.otmsservice.tk
       http:
         paths:
@@ -36,3 +40,7 @@ spec:
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000
+          - path: /cache-api
+            backend:
+              serviceName: cache-cluster-ip-service
+              servicePort: 5001

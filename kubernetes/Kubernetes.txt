@@ -2,6 +2,7 @@
 Kubernetes (K8S)
 ************************************************************************************************************************
 
+
 Get Pods Details:
 ------------------------------
 kubectl get pods -o wide
@@ -10,25 +11,30 @@ kubectl get nodes -o wide
 kubectl get services
 ------------------------------
 
+
 Delete Pods created with a config file
 ------------------------------------------------------------
 kubectl delete -f <config_file_name>
 ------------------------------------------------------------
+
 
 Update an image in a deployment
 ------------------------------------------------------------------------------------------------------------------------
 kubectl set image deployment/client-deployment client=nakash2050/employee-spa:v2
 ------------------------------------------------------------------------------------------------------------------------
 
+
 Check Pod Logs:
 ------------------------------------------------------------------------------------------------------------------------
 kubectl describe pods <POD_NAME>
 ------------------------------------------------------------------------------------------------------------------------
 
+
 Creating a Secret
 ------------------------------------------------------------------------------------------------------------------------
 kubectl create secret <generic|tls|docker-registry> <secret_name> --from-literal key=value
 ------------------------------------------------------------------------------------------------------------------------
+
 
 Applying Ingress Config
 ------------------------------------------------------------------------------------------------------------------------
@@ -39,6 +45,7 @@ Reference:
 https://kubernetes.github.io/ingress-nginx/
 ------------------------------------------------------------------------------------------------------------------------
 
+
 Kubernetes Dashboard
 ------------------------------------------------------------------------------------------------------------------------
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
@@ -47,13 +54,16 @@ kubectl proxy
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
 
+
 Clean-up:
 kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
 
 References:
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 ------------------------------------------------------------------------------------------------------------------------
+
 
 For encrypting GCP Service Account file using Ruby via Docker
 ------------------------------------------------------------------------------------------------------------------------
@@ -63,10 +73,12 @@ gem install travis
 travis login --com
 travis encrypt-file service-account.json -r nakash2050/k8s --com
 
+
 To get GIT SHA
 ------------------------------------------------------------------------------------------------------------------------
 git rev-parse HEAD
 ------------------------------------------------------------------------------------------------------------------------
+
 
 HELM for Production deployment which help deploying Ingress
 ------------------------------------------------------------------------------------------------------------------------
@@ -77,6 +89,15 @@ $ ./get_helm.sh
 
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 helm install my-nginx stable/nginx-ingress --set rbac.create=true
+
+
+
+Add the following records in Domain Server
+------------------------------------------------------------------------------------------------------------------------
+Name       Type     TTL       Target
+<BLANK>    A        3600      <CLUSTER_PUBLIC_IP>
+WWW        CNAME    3600      otmsservice.tk 
+------------------------------------------------------------------------------------------------------------------------
 
 
 Installing HTTPS on K8S

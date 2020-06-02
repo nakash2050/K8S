@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: cache-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: cache
+    template:
+        metadata:
+            labels:
+                component: cache
+        spec:
+            containers:
+                - name: cache
+                  image: nakash2050/employee-cache
+                  ports:
+                    - containerPort: 5001
+                  env:
+                    - name: ASPNETCORE_URLS
+                      value: http://+:5001
+                    - name: ASPNETCORE_ENVIRONMENT
+                      value: Production
+                    - name: API_PATH_BASE
+                      value: cache-api
+                    - name: REDIS_CONNECTION_STRING
+                      value: redis-cluster-ip-service:6379
+                    - name: CACHE_TIMEOUT
+                      value: '600'
+                    - name: PG_SERVER
+                      value: postgres-cluster-ip-service
+                    - name: PG_SERVER_PORT
+                      value: '5432'
+                    - name: PG_DATABASE
+                      value: CacheData
+                    - name: PG_USERNAME
+                      value: postgres
+                    - name: PG_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                            name: pgpassword
+                            key: PG_PASSWORD
